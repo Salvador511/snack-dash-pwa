@@ -12,7 +12,6 @@ export const GET = async () => {
     })
     return NextResponse.json({ users })
   } catch (error: any) {
-    console.error('Error fetching users:', error)
     return NextResponse.json({ error: error.message || 'Unknown error' }, { status: error.status || 500 })
   }
 }

@@ -3,6 +3,7 @@ import withPWA from "@ducanh2912/next-pwa";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ['@prisma/client', 'prisma'],
   images: {
     remotePatterns: [
       {
@@ -20,10 +21,8 @@ const nextConfig: NextConfig = {
     ],
   },
   outputFileTracingIncludes: {
-    '/api/**': [
+    '**': [
       './generated/prisma/**',
-      './node_modules/.prisma/**',
-      './node_modules/@prisma/engines/**',
     ],
   },
 }

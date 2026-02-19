@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import withPWA from "@ducanh2912/next-pwa";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 const nextConfig: NextConfig = {
   images: {
@@ -18,4 +20,19 @@ const nextConfig: NextConfig = {
     ],
   },
 }
-export default nextConfig;
+
+const withPwa = withPWA({
+  dest: "public",
+  register: true,
+  disable: false,
+  fallbacks: {
+    document: "/~offline",
+  },
+});
+
+export default (phase: string) => {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    return nextConfig;
+  }
+  return withPwa(nextConfig);
+};

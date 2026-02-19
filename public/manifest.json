@@ -1,0 +1,17 @@
+{
+  "name": "Snack Dash",
+  "short_name": "SnackDash",
+  "description": "Snack Dash",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#303030",
+  "theme_color": "#303030",
+  "icons": [
+    {
+      "src": "/snack-dash-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -29,6 +29,21 @@ const withPwa = withPWA({
   fallbacks: {
     document: "/~offline",
   },
+  workboxOptions: {
+    runtimeCaching: [
+      {
+        urlPattern: /^https?.*\/api\/user$/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'api-users-cache',
+          expiration: {
+            maxAgeSeconds: 60 * 60 * 24, // 24 horas
+          },
+          networkTimeoutSeconds: 5,
+        },
+      },
+    ],
+  },
 });
 
 export default (phase: string) => {

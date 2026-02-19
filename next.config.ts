@@ -37,7 +37,7 @@ const withPwa = withPWA({
         options: {
           cacheName: 'api-users-cache',
           expiration: {
-            maxAgeSeconds: 60 * 60 * 24, // 24 horas
+            maxAgeSeconds: 60 * 60 * 24 * 30, // 24 horas
           },
           networkTimeoutSeconds: 5,
         },

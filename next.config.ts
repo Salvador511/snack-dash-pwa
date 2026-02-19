@@ -37,9 +37,23 @@ const withPwa = withPWA({
         options: {
           cacheName: 'api-users-cache',
           expiration: {
-            maxAgeSeconds: 60 * 60 * 24, // 24 horas
+            maxAgeSeconds: 60 * 60 * 24 * 30, // 24 horas
           },
           networkTimeoutSeconds: 5,
+        },
+      },
+      {
+        urlPattern: /^https:\/\/api\.dicebear\.com\/.*/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'avatar-cache',
+          expiration: {
+            maxEntries: 200,
+            maxAgeSeconds: 60 * 60 * 24 * 30, // 30 días
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
         },
       },
     ],

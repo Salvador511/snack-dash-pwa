@@ -20,11 +20,6 @@ const nextConfig: NextConfig = {
       }
     ],
   },
-  outputFileTracingIncludes: {
-    '**': [
-      './generated/prisma/**',
-    ],
-  },
 }
 
 const withPwa = withPWA({

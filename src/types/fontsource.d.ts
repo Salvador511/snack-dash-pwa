@@ -1,0 +1,6 @@
+declare module '@fontsource-variable/fira-code'
+declare module '@fontsource/ubuntu'
+declare module '@fontsource-variable/fredoka'
+declare module '@fontsource-variable/inter'
+declare module '@fontsource/barlow'
+declare module '@fontsource/fredoka-one'

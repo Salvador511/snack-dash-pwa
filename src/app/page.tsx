@@ -1,66 +1,189 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import { Typography as T } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import getClassPrefixer from '~/app/UI/classPrefixer'
+import { useApiQuery } from '~/app/Libs/apiFetch'
+import Image from 'next/image'
+import Loading from '~/app/UI/Shared/Loading'
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+const displayName = 'RankingPage'
+const classes = getClassPrefixer(displayName) as any
+
+const HEADERS = ['Username', 'Wins']
+
+type RankingUser = {
+  id: string
+  username: string
+  wins: number
 }
+
+const Container = styled('div')(({ theme }: any) => ({
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '2rem',
+  '@media (max-width: 768px)': {
+    padding: '1rem',
+  },
+  [`& .${classes.title}`]: {
+    marginBottom: '2rem',
+    textAlign: 'center',
+  },
+  [`& .${classes.gridHeader}, & .${classes.gridItems}`]: {
+    display: 'grid',
+    gridTemplateColumns: '0.5fr 3fr 1fr',
+  },
+  [`& .${classes.gridHeader}`]: {
+    marginBottom: '0.5rem',
+  },
+  [`& .${classes.item}`]: {
+    paddingLeft: '1ch',
+    paddingRight: '1ch',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+  [`& .${classes.gridItems}`]: {
+    width: '100%',
+    marginTop: '0.5ch',
+    padding: '0.5ch',
+    background: theme.palette.primary.enabled,
+    color: theme.palette.primary.main,
+  },
+  [`& .${classes.top1}`]: {
+    background: theme.palette.contrast.active,
+    borderLeft: `6px solid ${theme.palette.contrast.main}`,
+    color: `${theme.palette.text.main}`,
+    fontWeight: 'bold',
+  },
+  [`& .${classes.top2}`]: {
+    background: theme.palette.contrast.active,
+    borderLeft: `4px solid ${theme.palette.contrast.main}`,
+    color: `${theme.palette.text.main}`,
+    fontWeight: 'bold',
+  },
+  [`& .${classes.top3}`]: {
+    background: theme.palette.contrast.active,
+    borderLeft: `2px solid ${theme.palette.contrast.main}`,
+    color: `${theme.palette.text.main}`,
+    fontWeight: 'bold',
+  },
+  [`& .${classes.rankItem}`]: {
+    justifyContent: 'center',
+  },
+  [`& .${classes.userItem}`]: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1ch',
+  },
+  [`& .${classes.winsItem}`]: {
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  [`& .${classes.tableWrapper}`]: {
+    width: '100%',
+    maxWidth: '800px',
+    margin: '0 auto',
+    '@media (max-width: 768px)': {
+      overflowX: 'scroll',
+      WebkitOverflowScrolling: 'touch',
+    },
+  },
+  [`& .${classes.tableContent}`]: {
+    minWidth: '100%',
+    '@media (max-width: 768px)': {
+      minWidth: '400px',
+    },
+  },
+}))
+
+const RankingPage = ({ users }: { users: RankingUser[] }) => {
+  return (
+    <Container>
+      <T variant="h4" className={classes.title} color="text">
+        Snack-Dash Best Players
+      </T>
+
+      <div className={classes.tableWrapper}>
+        <div className={classes.tableContent}>
+          <div className={classes.gridHeader}>
+            <div className={`${classes.item} ${classes.rankItem}`}>
+              <T variant="h6" color="text" fontWeight="bold">
+                Top
+              </T>
+            </div>
+            {HEADERS.map((item, index) => (
+              <div
+                className={`${classes.item} ${index === 1 ? classes.winsItem : ''}`}
+                key={index}
+              >
+                <T variant="h6" color="text" fontWeight="bold">
+                  {item}
+                </T>
+              </div>
+            ))}
+          </div>
+
+          {users.map((row, idx) => {
+            const topClass = [classes.top1, classes.top2, classes.top3][idx] ?? ''
+            return (
+              <div key={row.id} className={`${classes.gridItems} ${topClass}`}>
+                <div className={`${classes.item} ${classes.rankItem}`}>
+                  <T variant="subtitle1" fontWeight="bold">
+                    {idx + 1}
+                  </T>
+                </div>
+                <div className={`${classes.item} ${classes.userItem}`}>
+                  <Image
+                    src={'https://api.dicebear.com/7.x/bottts/svg?seed=' + row.username}
+                    alt='Avatar'
+                    width={40}
+                    height={40}
+                    layout="intrinsic"
+                    unoptimized
+                  />
+                  <T variant="subtitle1" fontWeight="bold">
+                    {row.username}
+                  </T>
+                </div>
+                <div className={`${classes.item} ${classes.winsItem}`}>
+                  <T variant="subtitle1" fontWeight="bold">
+                    {row.wins}
+                  </T>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </Container>
+  )
+}
+
+const Wrapper = () => {
+  const { data, isLoading: isUsersLoading, error: usersError } = useApiQuery({
+    url: '/api/user',
+    key: 'users',
+  })
+
+
+  if (isUsersLoading) return <Loading />
+
+  if (usersError) {
+    const message = String((usersError as any)?.message ?? usersError)
+    return <div>Error loading users: {message}</div>
+  }
+
+  const users = ((data as any)?.users ?? []) as RankingUser[]
+  const rows = [...users].sort((a, b) => (b.wins ?? 0) - (a.wins ?? 0))
+
+  return (
+    <RankingPage users={rows} />
+  )
+}
+
+export default Wrapper

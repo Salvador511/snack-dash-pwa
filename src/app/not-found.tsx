@@ -45,7 +45,7 @@ const NotFoundContainer = styled('div')(({ theme }) => ({
 
 const NotFound = () => {
   const router = useRouter()
-  // const notFoundImage = 'https://http.cat/status/404.jpg'
+  const notFoundImage = 'https://http.cat/status/404.jpg'
 
   return (
     <NotFoundContainer>
@@ -54,7 +54,7 @@ const NotFound = () => {
           <T variant="h3" color='primary.main'>
             404 - Page Not Found
           </T>
-          <T variant="h6" color='primary.main'>
+          <T variant="subtitle1" color='text.main'>
             Oops! The page you&#39;re looking for doesn&#39;t exist or has been moved. Return to the homepage
           </T>
           <div className={classes.buttonContainer}>
@@ -68,13 +68,14 @@ const NotFound = () => {
           </div>
         </div>
         <div>
-          {/* <Image
+          <Image
             src={notFoundImage}
             alt='Not Found'
             width={400}
             height={400}
             layout="intrinsic"
-          /> */}
+            unoptimized
+          />
         </div>
       </div>
     </NotFoundContainer>

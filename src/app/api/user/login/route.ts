@@ -18,7 +18,7 @@ export const POST = async (request: Request) => {
     if (!isPasswordValid) return NextResponse.json({ error: 'Invalid username or password' }, { status: 400 })
 
     if (!process.env.JWT_SECRET) return NextResponse.json({ error: 'Invalid username or password' }, { status: 400 })
-    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET)
+    const token = jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET)
     return NextResponse.json(token, { status: 200 })
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Unknown error' }, { status: error.status || 500 })

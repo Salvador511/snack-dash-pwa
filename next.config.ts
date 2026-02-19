@@ -19,6 +19,13 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  outputFileTracingIncludes: {
+    '/*': [
+      './generated/prisma/**',
+      './node_modules/.prisma/**',
+      './node_modules/@prisma/engines/**',
+    ],
+  },
 }
 
 const withPwa = withPWA({

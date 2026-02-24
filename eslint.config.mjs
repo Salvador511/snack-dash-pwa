@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "node_modules/**/*.*",
     "__fixtures__/*.js",
+    "public/**/*.js",
   ]),
   {
     files: ["src/**/*.{js,jsx,ts,tsx}", "test/**/*.{js,jsx,mjs}"],

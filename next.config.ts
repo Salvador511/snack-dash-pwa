@@ -60,9 +60,11 @@ const withPwa = withPWA({
   },
 });
 
-export default (phase: string) => {
+const config = (phase: string) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return nextConfig;
   }
   return withPwa(nextConfig);
-};
+}
+
+export default config

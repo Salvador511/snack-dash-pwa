@@ -3,9 +3,12 @@ import { Button, Stack, Typography as T } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import getClassPrefixer from '~/app/UI/classPrefixer'
 import { Field, Form, Formik, useFormikContext } from 'formik'
-import { getLoginInitialValues, getLoginValidationSchema } from '~/app/access/utils'
+import { getRegisterInitialValues, getRegisterValidationSchema } from '~/app/access/utils'
 import TextField from '~/app/UI/Shared/FormikTextField'
-
+import { useApiMutation } from '~/app/Libs/apiFetch'
+import Loading from '~/app/UI/Shared/Loading'
+import { useState } from 'react'
+import type { SnackbarMessage } from '~/app/access/page'
 
 const displayName = 'RegisterForm'
 const classes = getClassPrefixer(displayName) as any
@@ -22,6 +25,8 @@ const Container = styled('div')(({ theme }: any) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '40vw',
+    boxSizing: 'border-box',
     padding: '2rem 4rem',
     gap: '1rem',
     border: `solid 3px ${theme.palette.primary.main}`,
@@ -141,13 +146,39 @@ const RegisterForm = ({ setPageState }: RegisterFormInnerProps) => {
 
 type RegisterFormProps = {
   setPageState: (_pageState: 'login' | 'register') => void
+  setSnackbarMessage: (_message: SnackbarMessage | null) => void
 }
-const Wrapper = ({ setPageState }: RegisterFormProps) => {
-  const intialValues = getLoginInitialValues()
-  const validationSchema = getLoginValidationSchema()
-  const handleSubmit = (values: any) => {
-    console.error(values)
+const Wrapper = ({ setPageState, setSnackbarMessage }: RegisterFormProps) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const intialValues = getRegisterInitialValues()
+  const validationSchema = getRegisterValidationSchema()
+  const register = useApiMutation({
+    url: '/api/user',
+    method: 'POST',
+    key: 'register',
+  })
+  const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+    register.mutate(values, {
+      onSuccess: () => {
+        setSnackbarMessage({
+          severity: 'success',
+          message: 'Registration successful! Please log in.',
+        })
+        setPageState('login')
+      },
+      onError: () => {
+        setSnackbarMessage({
+          severity: 'error',
+          message: 'Registration failed. Please try again.',
+        })
+      },
+      onSettled: () => {
+        setIsLoading(false)
+      }
+    })
   }
+  if (isLoading) return <Loading />
   return (
     <Formik initialValues={intialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form>

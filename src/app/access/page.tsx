@@ -74,6 +74,17 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
               backgroundSize: '200px 200px',
               backgroundRepeat: 'repeat',
               opacity: 0.04,
+              zIndex: -2,
+              pointerEvents: 'none',
+            },
+            '&::after': {
+              content: '""',
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              background: 'rgba(0, 0, 0, 0.25)',
               zIndex: -1,
               pointerEvents: 'none',
             },
@@ -96,7 +107,7 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
               <LoginForm setPageState={setPageState} setSnackbarMessage={setSnackbarMessage} />
             )}
             {pageState === 'register' && (
-              <RegisterForm setPageState={setPageState} />
+              <RegisterForm setPageState={setPageState} setSnackbarMessage={setSnackbarMessage} />
             )}
           </div>
         </div>

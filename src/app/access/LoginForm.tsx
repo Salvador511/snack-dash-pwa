@@ -28,6 +28,8 @@ const Container = styled('div')(({ theme }: any) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '40vw',
+    boxSizing: 'border-box',
     padding: '4rem',
     gap: '1rem',
     border: `solid 3px ${theme.palette.primary.main}`,

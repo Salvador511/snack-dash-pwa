@@ -6,7 +6,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import type { ComponentType } from 'react'
 
 export interface SidebarOption {
-  title: 'Ranking' | 'Login' | 'Register' | 'My Account' | 'Logout'
+  title: 'Ranking' | 'Access' | 'My Account' | 'Logout'
   Icon: ComponentType<any> | null
   requiresAuth?: boolean
   adminOnly?: boolean
@@ -29,16 +29,10 @@ export const SIDEBAR_OPTS: SidebarOption[] = [
     url: '/',
   },
   {
-    title: 'Login',
+    title: 'Access',
     Icon: LoginIcon,
     unloggedOnly: true,
-    url: '/login',
-  },
-  {
-    title: 'Register',
-    Icon: null,
-    unloggedOnly: true,
-    url: '/register',
+    url: '/access',
   },
   {
     title: 'My Account',

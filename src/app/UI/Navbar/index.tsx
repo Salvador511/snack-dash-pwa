@@ -7,9 +7,10 @@ import classNames from 'clsx'
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import getClassPrefixer from '~/app/UI/classPrefixer'
 import { isOptionVisible, SIDEBAR_OPTS } from './utils'
+import { useToken } from '~/app/store/useToken'
 
 const displayName = 'Navbar'
 const classes = getClassPrefixer(displayName) as any
@@ -20,6 +21,7 @@ const NavbarContainer = styled('div')(({ theme }: any) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: '130px',
     padding: '2rem',
     '@media (max-width: 768px)': {
       padding: '1rem',
@@ -87,20 +89,21 @@ const NavbarContainer = styled('div')(({ theme }: any) => ({
   },
 }))
 
-interface MobileNavbarProps {
-  // SPA props - comentados para web normal
-  // selectedCategory?: DashboardCategory
-  // setSelectedCategory?: (newValue: DashboardCategory) => void
-  userRole?: string
-  // handleLogout?: () => void
-}
 
-const Navbar = ({ userRole = 'UNLOGGED' }: MobileNavbarProps) => {
+const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
+  const { token, logout } = useToken()
 
-  const handleOptionClick = () => {
+  const userRole = token ? 'LOGGED' : 'UNLOGGED'
+
+  const handleOptionClick = (url: string) => {
     setSidebarOpen(false)
+    if (url === '/logout') {
+      logout()
+      router.push('/')
+    }
   }
 
   const isActive = (url: string) => {
@@ -132,8 +135,9 @@ const Navbar = ({ userRole = 'UNLOGGED' }: MobileNavbarProps) => {
                 key={`${title}-${index}`}
                 className={classes.desktopButton}
                 variant={'text'}
-                component={Link}
-                href={url}
+                component={url === '/logout' ? 'button' : Link}
+                href={url === '/logout' ? undefined : url}
+                onClick={() => handleOptionClick(url)}
               >
                 {title}
               </Button>
@@ -172,9 +176,9 @@ const Navbar = ({ userRole = 'UNLOGGED' }: MobileNavbarProps) => {
                   className={classes.button}
                   variant={isActive(url) ? 'contained' : 'text'}
                   startIcon={Icon ? <Icon /> : null}
-                  component={Link}
-                  href={url}
-                  onClick={handleOptionClick}
+                  component={url === '/logout' ? 'button' : Link}
+                  href={url === '/logout' ? undefined : url}
+                  onClick={() => handleOptionClick(url)}
                   fullWidth
                 >
                   {title}

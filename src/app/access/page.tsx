@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import LoginForm from '~/app/access/LoginForm'
 import RegisterForm from '~/app/access/RegisterForm'
+import { charactersImages, backgroundCookie } from '~/app/UI/Images'
 
 const displayName = 'AccessPage'
 const classes = getClassPrefixer(displayName) as any
@@ -18,6 +19,26 @@ const Container = styled('div')(() => ({
   padding: '0rem 2rem 2rem 2rem',
   height: 'calc(100dvh - 130px)',
   overflow: 'hidden',
+  '@keyframes accessSwapInLeft': {
+    from: {
+      opacity: 0,
+      transform: 'translateX(-24px) scale(0.98)',
+    },
+    to: {
+      opacity: 1,
+      transform: 'translateX(0) scale(1)',
+    },
+  },
+  '@keyframes accessSwapInRight': {
+    from: {
+      opacity: 0,
+      transform: 'translateX(24px) scale(0.98)',
+    },
+    to: {
+      opacity: 1,
+      transform: 'translateX(0) scale(1)',
+    },
+  },
   '@media (max-width: 768px)': {
     padding: '1rem',
   },
@@ -46,6 +67,22 @@ const Container = styled('div')(() => ({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    position: 'relative',
+  },
+  [`& .${classes.formSwap}`]: {
+    width: '100%',
+    animationDuration: '650ms',
+    animationTimingFunction: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+    animationFillMode: 'both',
+    '@media (prefers-reduced-motion: reduce)': {
+      animationDuration: '1ms',
+    },
+  },
+  [`& .${classes.formSwapLogin}`]: {
+    animationName: 'accessSwapInLeft',
+  },
+  [`& .${classes.formSwapRegister}`]: {
+    animationName: 'accessSwapInRight',
   },
 }))
 
@@ -70,10 +107,21 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
               left: 0,
               width: '100%',
               height: '100%',
-              backgroundImage: 'url(/background-cookie.svg)',
+              backgroundImage: `url(${backgroundCookie})`,
               backgroundSize: '200px 200px',
               backgroundRepeat: 'repeat',
               opacity: 0.04,
+              zIndex: -2,
+              pointerEvents: 'none',
+            },
+            '&::after': {
+              content: '""',
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              background: 'rgba(0, 0, 0, 0.25)',
               zIndex: -1,
               pointerEvents: 'none',
             },
@@ -84,7 +132,7 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
         <div className={classes.grid}>
           <div className={classes.imageContainer} >
             <Image
-              src="/characters.svg"
+              src={charactersImages}
               alt="characters"
               width={600}
               height={600}
@@ -92,12 +140,17 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
             />
           </div>
           <div className={classes.formContainer} >
-            {pageState === 'login' && (
-              <LoginForm setPageState={setPageState} setSnackbarMessage={setSnackbarMessage} />
-            )}
-            {pageState === 'register' && (
-              <RegisterForm setPageState={setPageState} />
-            )}
+            <div
+              key={pageState}
+              className={`${classes.formSwap} ${pageState === 'login' ? classes.formSwapLogin : classes.formSwapRegister}`}
+            >
+              {pageState === 'login' && (
+                <LoginForm setPageState={setPageState} setSnackbarMessage={setSnackbarMessage} />
+              )}
+              {pageState === 'register' && (
+                <RegisterForm setPageState={setPageState} setSnackbarMessage={setSnackbarMessage} />
+              )}
+            </div>
           </div>
         </div>
         <Snackbar

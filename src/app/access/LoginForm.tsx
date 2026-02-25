@@ -28,6 +28,8 @@ const Container = styled('div')(({ theme }: any) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '40vw',
+    boxSizing: 'border-box',
     padding: '4rem',
     gap: '1rem',
     border: `solid 3px ${theme.palette.primary.main}`,
@@ -136,7 +138,7 @@ const Wrapper = ({ setPageState, setSnackbarMessage }: LoginFormProps) => {
   const login = useApiMutation({
     url: '/api/user/login',
     method: 'POST',
-    key: 'login',
+    keys: ['login'],
   })
   const handleSubmit = async (payload: any) => {
     setIsLoading(true)

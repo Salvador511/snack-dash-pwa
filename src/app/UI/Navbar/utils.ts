@@ -38,7 +38,7 @@ export const SIDEBAR_OPTS: SidebarOption[] = [
     title: 'My Account',
     Icon: SettingsIcon,
     requiresAuth: true,
-    url: '/account',
+    url: '/my-account',
   },
   {
     title: 'Logout',

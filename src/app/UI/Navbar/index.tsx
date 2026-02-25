@@ -11,6 +11,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import getClassPrefixer from '~/app/UI/classPrefixer'
 import { isOptionVisible, SIDEBAR_OPTS } from './utils'
 import { useToken } from '~/app/store/useToken'
+import { logo } from '~/app/UI/Images'
 
 const displayName = 'Navbar'
 const classes = getClassPrefixer(displayName) as any
@@ -115,7 +116,7 @@ const Navbar = () => {
       <div className={classes.navbar}>
         <Link href="/" style={{ textDecoration: 'none' }}>
           <Image
-            src="/snack-dash-logo.svg"
+            src={logo}
             alt="Snack Dash Logo"
             width={100}
             height={100}

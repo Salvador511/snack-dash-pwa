@@ -26,6 +26,6 @@ export const getRegisterValidationSchema = () =>
     email: Yup.string().required('Email is required').email('Must be a valid email address'),
     password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+      .oneOf([Yup.ref('password')], 'Passwords must match')
       .required('Confirm Password is required'),
   })

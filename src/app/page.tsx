@@ -15,6 +15,11 @@ type RankingUser = {
   id: string
   username: string
   wins: number
+  image?: string | null
+}
+
+type RankingRow = RankingUser & {
+  rank: number
 }
 
 const Container = styled('div')(({ theme }: any) => ({
@@ -101,7 +106,7 @@ const Container = styled('div')(({ theme }: any) => ({
   },
 }))
 
-const RankingPage = ({ users }: { users: RankingUser[] }) => {
+const RankingPage = ({ users }: { users: RankingRow[] }) => {
   return (
     <Container>
       <T variant="h4" className={classes.title} color="text">
@@ -128,18 +133,23 @@ const RankingPage = ({ users }: { users: RankingUser[] }) => {
             ))}
           </div>
 
-          {users.map((row, idx) => {
-            const topClass = [classes.top1, classes.top2, classes.top3][idx] ?? ''
+          {users.map(row => {
+            const rankClassMap: Record<number, string> = {
+              1: classes.top1,
+              2: classes.top2,
+              3: classes.top3,
+            }
+            const topClass = rankClassMap[row.rank] ?? ''
             return (
               <div key={row.id} className={`${classes.gridItems} ${topClass}`}>
                 <div className={`${classes.item} ${classes.rankItem}`}>
                   <T variant="subtitle1" fontWeight="bold">
-                    {idx + 1}
+                    {row.rank}
                   </T>
                 </div>
                 <div className={`${classes.item} ${classes.userItem}`}>
                   <Image
-                    src={'https://api.dicebear.com/7.x/bottts/svg?seed=' + row.username}
+                    src={row.image ??'https://api.dicebear.com/7.x/bottts/svg?seed=' + row.username}
                     alt='Avatar'
                     width={40}
                     height={40}
@@ -179,7 +189,21 @@ const Wrapper = () => {
   }
 
   const users = ((data as any)?.users ?? []) as RankingUser[]
-  const rows = [...users].sort((a, b) => (b.wins ?? 0) - (a.wins ?? 0))
+  const rows = [...users]
+    .sort((a, b) => (b.wins ?? 0) - (a.wins ?? 0))
+    .reduce((acc: RankingRow[], row) => {
+      const lastRow = acc[acc.length - 1]
+      let rank: number
+      if (!lastRow) {
+        rank = 1
+      } else if (lastRow.wins === row.wins) {
+        rank = lastRow.rank
+      } else {
+        rank = lastRow.rank + 1
+      }
+      acc.push({ ...row, rank })
+      return acc
+    }, [])
 
   return (
     <RankingPage users={rows} />

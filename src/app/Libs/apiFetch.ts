@@ -53,8 +53,8 @@ export const useApiQuery = (
 
 
 export const useApiMutation = (
-  { url, method, key, ...options }:
-  { url: string, method: Methods, key: string }
+  { url, method, keys, ...options }:
+  { url: string, method: Methods, keys: string[] }
 ) => {
   const ALLOWED_METHODS = ['POST', 'PUT', 'PATCH']
   if (!ALLOWED_METHODS.includes(method)) throw new TypeError(`Error: useApiMutation does not support method: ${method}`)
@@ -65,15 +65,17 @@ export const useApiMutation = (
   return useMutation({
     mutationFn: payload => apiFetch({ url, payload, method, token,...options }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [key] })
+      keys.forEach(key => {
+        queryClient.invalidateQueries({ queryKey: [key] })
+      })
     }
   })
 }
 
 
 export const useApiDelete = (
-  { url, key }
-  : { url: string, key: string }
+  { url, keys }
+  : { url: string, keys: string[] }
 ) => {
   const token = useToken(state => state.token)
   const queryClient = useQueryClient()
@@ -81,7 +83,9 @@ export const useApiDelete = (
   return useMutation({
     mutationFn: payload => apiFetch({ url, payload, method: 'DELETE', token }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [key] })
+      keys.forEach(key => {
+        queryClient.invalidateQueries({ queryKey: [key] })
+      })
     }
   })
 }

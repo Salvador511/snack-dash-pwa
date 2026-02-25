@@ -155,7 +155,7 @@ const Wrapper = ({ setPageState, setSnackbarMessage }: RegisterFormProps) => {
   const register = useApiMutation({
     url: '/api/user',
     method: 'POST',
-    key: 'register',
+    keys: ['users'],
   })
   const handleSubmit = async (values: any) => {
     setIsLoading(true)

@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import LoginForm from '~/app/access/LoginForm'
 import RegisterForm from '~/app/access/RegisterForm'
+import { charactersImages, backgroundCookie } from '~/app/UI/Images'
 
 const displayName = 'AccessPage'
 const classes = getClassPrefixer(displayName) as any
@@ -106,7 +107,7 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
               left: 0,
               width: '100%',
               height: '100%',
-              backgroundImage: 'url(/background-cookie.svg)',
+              backgroundImage: `url(${backgroundCookie})`,
               backgroundSize: '200px 200px',
               backgroundRepeat: 'repeat',
               opacity: 0.04,
@@ -131,7 +132,7 @@ const AccessPage = ({ pageState, setPageState, snackbarMessage, setSnackbarMessa
         <div className={classes.grid}>
           <div className={classes.imageContainer} >
             <Image
-              src="/characters.svg"
+              src={charactersImages}
               alt="characters"
               width={600}
               height={600}

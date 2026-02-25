@@ -1,5 +1,6 @@
 'use client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ThemeRegistry from '~/app/UI/Theme'
 import Navbar from '~/app/UI/Navbar'
 
@@ -34,6 +35,9 @@ export default function RootLayout({
           <body>
             <Navbar />
             {children}
+            {process.env.NODE_ENV !== 'production' && (
+              <ReactQueryDevtools />
+            )}
           </body>
         </QueryClientProvider>
       </ThemeRegistry>

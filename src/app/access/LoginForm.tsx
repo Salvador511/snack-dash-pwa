@@ -138,7 +138,7 @@ const Wrapper = ({ setPageState, setSnackbarMessage }: LoginFormProps) => {
   const login = useApiMutation({
     url: '/api/user/login',
     method: 'POST',
-    key: 'login',
+    keys: ['login'],
   })
   const handleSubmit = async (payload: any) => {
     setIsLoading(true)

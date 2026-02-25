@@ -15,6 +15,7 @@ type RankingUser = {
   id: string
   username: string
   wins: number
+  image?: string | null
 }
 
 type RankingRow = RankingUser & {
@@ -148,7 +149,7 @@ const RankingPage = ({ users }: { users: RankingRow[] }) => {
                 </div>
                 <div className={`${classes.item} ${classes.userItem}`}>
                   <Image
-                    src={'https://api.dicebear.com/7.x/bottts/svg?seed=' + row.username}
+                    src={row.image ??'https://api.dicebear.com/7.x/bottts/svg?seed=' + row.username}
                     alt='Avatar'
                     width={40}
                     height={40}

@@ -17,13 +17,21 @@ const displayName = 'Navbar'
 const classes = getClassPrefixer(displayName) as any
 
 const NavbarContainer = styled('div')(({ theme }: any) => ({
+  [`&.${classes.home}`]: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
   [`& .${classes.navbar}`]: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '130px',
-    padding: '2rem',
+    padding: '4rem',
+    background: 'transparent',
     '@media (max-width: 768px)': {
       padding: '1rem',
     },
@@ -85,6 +93,7 @@ const NavbarContainer = styled('div')(({ theme }: any) => ({
     padding: '0.5ch 1.5ch',
     textTransform: 'none',
     color: theme.palette.text.main,
+    fontSize: '1rem',
     fontFamily: 'Fredoka Variable',
     fontWeight: 600,
   },
@@ -112,7 +121,11 @@ const Navbar = () => {
   }
 
   return (
-    <NavbarContainer className={classes.navbar}>
+    <NavbarContainer
+      className={classNames(classes.navbar, {
+        [classes.home]: pathname === '/',
+      })}
+    >
       <div className={classes.navbar}>
         <Link href="/" style={{ textDecoration: 'none' }}>
           <Image

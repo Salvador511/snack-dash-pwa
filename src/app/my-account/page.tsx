@@ -25,7 +25,7 @@ const classes = getClassPrefixer(displayName) as any
 const Container = styled('div')(({ theme }: any) => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '2rem',
+  padding: '4rem',
   height: 'calc(100dvh - 130px)',
   '@media (max-width: 768px)': {
     padding: '1rem',
@@ -215,7 +215,7 @@ const AccountForm = ({
               <Stack direction="column" alignItems="center" gap="0.4rem">
                 <T variant="h4">My Account</T>
                 <T variant="body1" color="text.secondary" className={classes.caption}>
-                  Update your profile photo and keep your info current.
+                  Update your profile details, change your password, and manage your profile photo.
                 </T>
               </Stack>
               <div className={classes.avatarWrap}>

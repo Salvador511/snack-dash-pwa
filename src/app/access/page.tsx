@@ -16,7 +16,7 @@ const classes = getClassPrefixer(displayName) as any
 const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '0rem 2rem 2rem 2rem',
+  padding: '0rem 4rem 4rem 4rem',
   height: 'calc(100dvh - 130px)',
   overflow: 'hidden',
   '@keyframes accessSwapInLeft': {
@@ -40,7 +40,7 @@ const Container = styled('div')(() => ({
     },
   },
   '@media (max-width: 768px)': {
-    padding: '1rem',
+    padding: '2rem',
   },
   [`& .${classes.grid}`]: {
     display: 'grid',

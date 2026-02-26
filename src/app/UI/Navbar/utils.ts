@@ -3,10 +3,11 @@ import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
+import HomeIcon from '@mui/icons-material/Home'
 import type { ComponentType } from 'react'
 
 export interface SidebarOption {
-  title: 'Ranking' | 'Access' | 'My Account' | 'Logout'
+  title: 'Home' | 'Ranking' | 'Access' | 'My Account' | 'Logout'
   Icon: ComponentType<any> | null
   requiresAuth?: boolean
   adminOnly?: boolean
@@ -24,9 +25,14 @@ export const isOptionVisible = (option: SidebarOption, userRole: string): boolea
 
 export const SIDEBAR_OPTS: SidebarOption[] = [
   {
+    title: 'Home',
+    Icon: HomeIcon,
+    url: '/',
+  },
+  {
     title: 'Ranking',
     Icon: EmojiEventsIcon,
-    url: '/',
+    url: '/ranking',
   },
   {
     title: 'Access',

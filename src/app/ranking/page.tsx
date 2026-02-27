@@ -95,10 +95,8 @@ const Container = styled('div')(({ theme }: any) => ({
     },
   },
   [`& .${classes.tableContent}`]: {
-    minWidth: '100%',
-    '@media (max-width: 768px)': {
-      minWidth: '400px',
-    },
+    width: '100%',
+  
   },
 }))
 

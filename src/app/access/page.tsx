@@ -16,9 +16,7 @@ const classes = getClassPrefixer(displayName) as any
 const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '0rem 4rem 4rem 4rem',
-  height: 'calc(100dvh - 130px)',
-  overflow: 'hidden',
+  height: 'calc(100vh - 130px)',
   '@keyframes accessSwapInLeft': {
     from: {
       opacity: 0,
@@ -39,15 +37,15 @@ const Container = styled('div')(() => ({
       transform: 'translateX(0) scale(1)',
     },
   },
-  '@media (max-width: 768px)': {
-    padding: '2rem',
-  },
   [`& .${classes.grid}`]: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     height: '100%',
     overflow: 'hidden',
     width: '100%',
+    '@media (max-width: 768px)': {
+      gridTemplateColumns: '1fr',
+    },
   },
   [`& .${classes.imageContainer}`]: {
     display: 'flex',
@@ -55,10 +53,14 @@ const Container = styled('div')(() => ({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    padding: '0rem 4rem 4rem 4rem',
     '& img': {
       objectFit: 'contain',
       maxWidth: '100%',
       maxHeight: '100%',
+    },
+    '@media (max-width: 768px)': {
+      display: 'none',
     },
   },
   [`& .${classes.formContainer}`]: {
@@ -67,7 +69,9 @@ const Container = styled('div')(() => ({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    position: 'relative',
+    '@media (max-width: 768px)': {
+      alignItems: 'flex-start'
+    },
   },
   [`& .${classes.formSwap}`]: {
     width: '100%',

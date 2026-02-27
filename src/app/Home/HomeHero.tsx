@@ -37,9 +37,12 @@ const Container = styled('div')(({ theme }: any) => ({
   [`& .${classes.heroContent}`]: {
     position: 'relative',
     zIndex: 2,
-    maxWidth: '50vw',
+    width: '50vw',
     textAlign: 'left',
     textShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+    '@media (max-width: 768px)': {
+      width: '100vw',
+    },
   },
   [`& .${classes.title}`]: {
     lineHeight: 1.2,

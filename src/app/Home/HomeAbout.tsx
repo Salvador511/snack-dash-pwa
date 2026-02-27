@@ -40,8 +40,7 @@ const Container = styled('div')(({ theme }: any) => ({
     overflow: 'hidden',
     minHeight: '90vh',
     '@media (max-width: 900px)': {
-      width: '100%',
-      minHeight: '60vw',
+      display: 'none',
     },
   },
   [`& .${classes.image}`]: {

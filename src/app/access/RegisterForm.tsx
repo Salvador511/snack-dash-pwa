@@ -20,6 +20,10 @@ const Container = styled('div')(({ theme }: any) => ({
   justifyContent: 'center',
   width: '100%',
   height: '100%',
+  padding: '0rem 4rem 4rem 4rem',
+  '@media (max-width: 768px)': {
+    padding: '2rem',
+  },
   [`& .${classes.form}`]: {
     display: 'flex',
     flexDirection: 'column',
@@ -32,6 +36,12 @@ const Container = styled('div')(({ theme }: any) => ({
     border: `solid 3px ${theme.palette.primary.main}`,
     borderRadius: '1rem',
     background: theme.palette.text.main,
+    '@media (max-width: 768px)': {
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+      width: '100%',
+      padding: '2rem',
+    },
   },
   [`& .${classes.fields}`]: {
     display: 'flex',

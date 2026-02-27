@@ -22,7 +22,7 @@ const Container = styled('div')(({ theme }: any) => ({
   height: '100%',
   padding: '0rem 4rem 4rem 4rem',
   '@media (max-width: 768px)': {
-    padding: '2rem',
+    padding: '0 2rem 2rem 2rem',
   },
   [`& .${classes.form}`]: {
     display: 'flex',
@@ -30,7 +30,6 @@ const Container = styled('div')(({ theme }: any) => ({
     alignItems: 'center',
     justifyContent: 'center',
     width: '40vw',
-    boxSizing: 'border-box',
     padding: '2rem 4rem',
     gap: '1rem',
     border: `solid 3px ${theme.palette.primary.main}`,

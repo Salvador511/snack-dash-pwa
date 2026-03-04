@@ -12,11 +12,11 @@ const Container = styled('div')(({ theme }: any) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'stretch',
-  minHeight: '90vh',
+  height: '100vh',
   background: theme.palette.background.main,
   '@media (max-width: 900px)': {
     flexDirection: 'column',
-    minHeight: 'auto',
+    alignItems: 'center',
   },
   [`& .${classes.item}`]: {
     display: 'flex',

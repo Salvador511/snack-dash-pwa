@@ -32,6 +32,24 @@ const withPwa = withPWA({
   workboxOptions: {
     runtimeCaching: [
       {
+        urlPattern: /^https?.*\/ranking$/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'ranking-page',
+          expiration: {
+            maxAgeSeconds: 60 * 60 * 24 * 7, // 7 dias
+          },
+          networkTimeoutSeconds: 5,
+        },
+      },
+      {
+        urlPattern: ({ request }) => request.mode === 'navigate',
+        handler: 'NetworkOnly',
+        options: {
+          cacheName: 'pages-network-only',
+        },
+      },
+      {
         urlPattern: /^https?.*\/api\/user$/,
         handler: 'NetworkFirst',
         options: {

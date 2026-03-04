@@ -16,7 +16,9 @@ const classes = getClassPrefixer(displayName) as any
 const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  height: 'calc(100vh - 130px)',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minHeight: 'calc(100vh - 130px)',
   '@keyframes accessSwapInLeft': {
     from: {
       opacity: 0,

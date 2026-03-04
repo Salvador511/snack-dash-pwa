@@ -28,7 +28,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#303030" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" type="image/svg+xml" href="/snack-dash-logo.svg" />
-        <link rel="apple-touch-icon" href="/snack-dash-logo.svg" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
       </head>
       <ThemeRegistry>
         <QueryClientProvider client={queryClient}>

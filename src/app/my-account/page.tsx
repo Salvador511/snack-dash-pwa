@@ -16,6 +16,7 @@ import { useApiMutation, useApiQuery } from '~/app/Libs/apiFetch'
 import Loading from '~/app/UI/Shared/Loading'
 import { useEffect, useState, type ChangeEvent } from 'react'
 import { useToken } from '~/app/store/useToken'
+import { useMe } from '~/app/store/useMe'
 import { useRouter } from 'next/navigation'
 import { backgroundCookie } from '~/app/UI/Images'
 
@@ -329,6 +330,7 @@ const Wrapper = () => {
   const [imageOverride, setImageOverride] = useState<string | null | undefined>(undefined)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const { token } = useToken()
+  const { setMe } = useMe()
   const router = useRouter()
 
   const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? ''
@@ -414,7 +416,8 @@ const Wrapper = () => {
 
     setIsSaving(true)
     updateAccount.mutate(payload, {
-      onSuccess: () => {
+      onSuccess: (data: any) => {
+        if (data?.user) setMe(data.user)
         setSnackbarMessage({
           severity: 'success',
           message: 'Account updated successfully.',

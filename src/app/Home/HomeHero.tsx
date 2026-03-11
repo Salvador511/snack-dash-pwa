@@ -9,7 +9,7 @@ const classes = getClassPrefixer(displayName) as any
 
 const Container = styled('div')(({ theme }: any) => ({
   width: '100vw',
-  height: '100svh',
+  height: '100vh',
   [`& .${classes.hero}`]: {
     position: 'relative',
     width: '100vw',

@@ -41,7 +41,7 @@ export const apiFetch = async ({
 
 export const useApiQuery = (
   { url, payload = {}, key, ...options }:
-  { url: string, payload?: any, key: string }
+  { url: string, payload?: any, key: string } & Record<string, any>
 ) => {
   const token = useToken(state => state.token)
   return useQuery({

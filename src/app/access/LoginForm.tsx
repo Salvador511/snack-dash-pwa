@@ -5,12 +5,13 @@ import getClassPrefixer from '~/app/UI/classPrefixer'
 import { Field, Form, Formik, useFormikContext } from 'formik'
 import { getLoginInitialValues, getLoginValidationSchema } from '~/app/access/utils'
 import TextField from '~/app/UI/Shared/FormikTextField'
-import { useApiMutation } from '~/app/Libs/apiFetch'
+import { useApiMutation, useApiQuery } from '~/app/Libs/apiFetch'
 import Loading from '~/app/UI/Shared/Loading'
 import { useState } from 'react'
 import { useToken } from '~/app/store/useToken'
 import { useRouter } from 'next/navigation'
 import type { SnackbarMessage } from '~/app/access/page'
+import { useMe } from '~/app/store/useMe'
 
 
 const displayName = 'LoginForm'
@@ -142,8 +143,14 @@ const Wrapper = ({ setPageState, setSnackbarMessage }: LoginFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { setToken } = useToken()
+  const { setMe } = useMe()
   const intialValues = getLoginInitialValues()
   const validationSchema = getLoginValidationSchema()
+  const meQuery = useApiQuery({
+    url: '/api/user/me',
+    key: 'me',
+    enabled: false,
+  })
   const login = useApiMutation({
     url: '/api/user/login',
     method: 'POST',
@@ -153,8 +160,12 @@ const Wrapper = ({ setPageState, setSnackbarMessage }: LoginFormProps) => {
     setIsLoading(true)
     login.mutate(payload,
       {
-        onSuccess: (data: any) => {
+        onSuccess: async (data: any) => {
           setToken(data)
+          const meResult = await meQuery.refetch()
+          if (meResult.data) {
+            setMe(meResult.data)
+          }
           router.replace('/')
         },
         onError: () => {
